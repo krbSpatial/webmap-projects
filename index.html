@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Work Done</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-sidebar-v2/css/leaflet-sidebar.min.css"/>
+<!--link for circle marker numbers-->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.Default.css" />
+    <style>
+        #map {
+            height: 100vh;
+        }
+        @media screen and (max-width: 768px) { 
+            /* For Tab & Mobile-specific styles */
+            .leaflet-sidebar {
+                position: fixed !important; 
+                bottom: 0; 
+                left: 0; 
+                width: 100%; 
+                height: 35%; /* Adjust height as needed */
+                top: auto; /* Override default top positioning */
+                right: auto; /* Override default right positioning */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-sidebar-v2/js/leaflet-sidebar.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/leaflet.markercluster.js"></script>
+
+    <div id="sidebar" class="leaflet-sidebar collapsed">
+        <div class="leaflet-sidebar-tabs">
+            <ul role="tablist">
+                <li><a href="#home" role="tab"><i class="fa fa-bars"></i></a></li>
+                <li><a href="#info" role="tab"><i class="fa fa-info"></i></a></li>
+            </ul>
+        </div>
+        <div class="leaflet-sidebar-content">
+            <div class="leaflet-sidebar-pane" id="home">
+                <h1 class="leaflet-sidebar-header">Project Info</h1>
+                <div id="content"></div>
+            </div>
+        </div>
+    </div>
+
+    
+    <script>
+        var mymap = L.map('map').setView([28.394857 , 84.124008], 4.1);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19
+        }).addTo(mymap);
+
+        var sidebar = L.control.sidebar({
+            autopan: true,
+            closeButton: true,
+            container: 'sidebar',
+            position: 'right'
+        }).addTo(mymap);
+
+
+        var points = [
+            {
+                lat: 27.575267486253736, 
+                lng: 83.3588062720292,
+                title: 'Map Design & Installation',
+                description: 'The project involves drone surveying, map design as well as its board installation. It was done for Public Secondary School and is first of its kind for a school in Rupandehi district. <br> Watch project <a href="https://youtube.com/shorts/uXSYAkkWSOI?si=6pN9yrEuTbASedjq">video</a>',
+                image: "images/DroneSurvey-MapBoardInstallation.jpg"
+            },
+            {
+                lat: 27.578384, 
+                lng: 83.352690,
+                title: 'Survey for Pond Management',
+                description: 'It was done for Acharya Akikrit Krishi farm. My team surveyed the area and calculated area of respective ponds and did some land area/loss estimation by ovrlaying existing cadastral map.<br> Watch project <a href="https://youtube.com/shorts/uXSYAkkWSOI?si=6pN9yrEuTbASedjq">video</a>',
+                image: "images/AcharyaMatshyaFarm.jpg"
+            },
+            {
+                lat: 27.584294, 
+                lng: 83.377024,
+                title: 'Lumbini Palace Resort Surveying & Mapping',
+                description: 'This is one of my favourite project where my team surveyed 16 bigaha of land. Survey was done to prepare the masterplan for resort expansion and holistic management.<br> Watch project <a href="https://youtube.com/shorts/udySsc7RKQA?si=GE9HyvwEFUBhHuZf">video</a>',
+                image: "images/LPR.jpg"
+            },
+            {
+                lat: 27.608052, 
+                lng: 83.083493, 
+                title: 'Sagrahawa Mapping',
+                description: 'The project involves data collection through field survey and map design. Map was prepared so that the client can better visualize the existing area and plan better. It was done for an NGO who wanted to establish a new settlement area in that area in tribute to Lord Gautam Buddha.<br> Watch project <a href="https://youtube.com/shorts/rSg1c0FV1ZM?si=8i9q65c4Gqk4lm1u">video</a>',
+                image: "images/SagrahawaMapping.jpg"
+            },
+            {
+                lat: 28.237727806506552, 
+                lng: 83.98423790067535, 
+                title: 'Bindhyabasini Mapping',
+                description: 'The project was done for Bindhyabasini Temple Management Comiitee. The project involves drone survey along with map making. The resultant 2D map is supposed to help visitors for better navigation while 3D model will help for the future documention of the temple.<br> View <a href="https://youtu.be/QztdRKS8xg0?si=NgUvw6iBj9QI75v1">3D model</a>',
+                image: "images/BindhyabasiniMapping.jpg"
+            },
+            {
+                lat: 27.700846072529238, 
+                lng: 85.29609317005483, 
+                title: 'Kathmandu-5 Election Constituency Map',
+                description: 'The map was prepared for a potential candidate of Ktm-5 parliamentary election constituency. It was prepared for strategic planning/agendas for the election.<br> View <a href="https://youtu.be/QztdRKS8xg0?si=NgUvw6iBj9QI75v1">3D model</a>',
+                image: "images/Ktm-5.png"
+            },
+            {
+                lat: 26.6667, 
+                lng: 87.5000, 
+                title: 'Morang-3 Election Constituency Map',
+                description: 'It is a wall size map of width 6 ft and height 3.5 ft made for a potential candidate of Morang-3 parliamentary election constituency. It was prepared for strategic planning/agendas for the election.',
+                image: "images/Morang-3.jpg"
+            },
+            {
+                lat: 1.290270, 
+                lng: 103.851959, 
+                title: 'Remote QGIS Tutor',
+                description: 'I assisted Mr. Surojit Dutta, Lecturer at Temasek Polytechnic, Singapore to prepare training materials to his students. It was a virtual class and I really had a good experience working with him.',
+                image: "images/TrainingMaterial.png"
+            },
+            {
+                lat: 27.569115561835954, 
+                lng: 83.40294319621125, 
+                title: 'Pond Mangement System',
+                description: 'We worked as a data collection partner with Adhrit Engineering to prepare a web based pond management system for Siyari Rural Municipality. We collected point gis data related to pond through field survey and participatory rural appraisal method while the multipolygon data was obtained through SaS Planet satellite imagery digitization. <br> Watch <a href="https://youtube.com/shorts/sRqTye55eYQ?si=aGL30c8Gceov5Hzu">video</a> ',
+                image: "images/DataVisualization.png"
+            },
+            {
+                lat: 18.296974, 
+                lng: 83.896782, 
+                title: 'Srikakulam Research Project',
+                description: 'This was a research project related to water quality analysis of well sites. I was engaged in preparing study area map, rainfall data analysis, IDW Interpolation and other spatial analysis in close collaboration with other Indian researchers.',
+                image: "images/SrikakulamResearch.png"
+            },
+            {
+                lat: 27.517881, 
+                lng: 83.480517,
+                title: 'DPR Survey',
+                description: 'This project was done to prepare a detail project report for development of a new park.<br> Watch project <a href="https://youtube.com/shorts/9l1cvtr9z7s?si=oZy8z61mLPSELFJx">video</a>',
+                image: "images/OmsatiyaPark.jpg"
+            }
+        ];
+
+  // Define a marker cluster group (create only once)
+  var markerClusterGroup = L.markerClusterGroup();
+
+  // Loop through points and create markers, adding them to the cluster group
+  points.forEach(point => {
+    var marker = L.marker([point.lat, point.lng]);
+
+    // Define click event handler for each marker
+    marker.on('click', function (e) {
+      // Update sidebar content and perform other actions on click
+      document.getElementById('content').innerHTML = `
+        <h2>${point.title}</h2>
+        <img src="${point.image}" alt="${point.title}" style="width: 100%; height: auto;"/>
+        <p>${point.description}</p>
+      `;
+      sidebar.open('home');
+
+      //Seting clicked marker icon
+      marker.setIcon(clickedIcon);
+
+      // Optionally, zoom to marker location (commented out)
+      // map.setView(marker.getLatLng(), 16);
+    });  
+
+    markerClusterGroup.addLayer(marker);
+  });
+
+  // Add the cluster group with markers to the map (after creating all markers)
+  mymap.addLayer(markerClusterGroup);
+
+  // Defining clicked marker 
+     var clickedIcon = L.icon({
+     iconUrl: 'images/location.png',
+     iconSize: [35, 41],
+     iconAnchor: [12, 41]
+   });
+       
+    </script>
+</body>
+</html>
